@@ -17,10 +17,10 @@ def strip_accents(s):
         if unicodedata.category(c) != 'Mn')  
 
 
-#for i in range(len(person.mots)):
-#    mot = person.mots[i]
+for i in range(len(person.mots)):
+    mot = person.mots[i]
     
-#for i in range(len(person.dates)):
+# for i in range(len(person.dates)):
 #    date = person.dates[i]
 
 mots.append(person.mots)
@@ -50,14 +50,18 @@ for i in range(len(mots)):
 mots = list(dict.fromkeys(mots)); 
 
 #for i in range(len(mots)):
- #   print(str(mots[i]))
+#    print(str(mots[i]))
 
 # traitements pour dates 
+#print(str(person.dates()))
 
-dates.append(str(person.dates()))
-dates.append(datetime.strptime(person.dates()).year())
-dates.append(datetime.date(person.dates).month)
-dates.append(datetime.date(person.dates).day)
+dates.append(str(person.day()))
+dates.append(str(person.month()))
+dates.append(str(person.year()))
+dates.append(str(person.day()) + str(person.month()) + str(person.year()))
+dates.append(str(person.year()) + str(person.month()) + str(person.day()))
 
 for i in range(len(dates)):
-    print(str(dates[i]))
+    for y in range(len(mots)):
+        print(dates[i]+mots[y])
+        print(mots[y]+dates[i])
