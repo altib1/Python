@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Homepage</title>
+  </head>
+  <body>
+    <form>
+      <label for="word">Word:</label>
+      <input type="text" id="word" name="word"><br><br>
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date"><br><br>
+      <input type="submit" value="Submit">
+    </form>
+
+    <h1>Data:</h1>
+    <div id="data"></div>
+    <script>
+      fetch('/json_data')
+        .then(response => response.json())
+        .then(data => {
+          const dataDiv = document.getElementById('data');
+          dataDiv.innerHTML = JSON.stringify(data);
+        });
+    </script>
+  </body>
+</html>

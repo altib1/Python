@@ -1,9 +1,19 @@
 import datetime
 import Person 
 import unicodedata
+import json
 
-variable = str(input("Mot."))
-variable1 = str(input("Date"))
+with open('main.json', 'r') as f:
+    json_data = f.read()
+    if json_data:
+        data = json.loads(json_data)
+    else:
+        data = {}
+
+
+
+variable = str(data['word'])
+variable1 = str(data['date'])
 mot = ''
 date = ''
 mots = []
@@ -60,8 +70,18 @@ dates.append(str(person.month()))
 dates.append(str(person.year()))
 dates.append(str(person.day()) + str(person.month()) + str(person.year()))
 dates.append(str(person.year()) + str(person.month()) + str(person.day()))
-
+data = {};
 for i in range(len(dates)):
     for y in range(len(mots)):
-        print(dates[i]+mots[y])
-        print(mots[y]+dates[i])
+        data = {
+            "resultat1": mots[y]+dates[i] ,
+            "resultat2": dates[i]+mots[y]
+        }
+
+# Convert the data to JSON
+json_data = json.dumps(data)
+
+# Write the JSON data to a file
+with open('output.json', 'w') as file:
+    file.write(json_data)
+
