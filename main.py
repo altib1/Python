@@ -3,17 +3,10 @@ import Person
 import unicodedata
 import json
 
-with open('main.json', 'r') as f:
-    json_data = f.read()
-    if json_data:
-        data = json.loads(json_data)
-    else:
-        data = {}
 
 
-
-variable = str(data['word'])
-variable1 = str(data['date'])
+variable = str('test')
+variable1 = str(datetime.date.today)
 mot = ''
 date = ''
 mots = []
@@ -77,11 +70,4 @@ for i in range(len(dates)):
             "resultat1": mots[y]+dates[i] ,
             "resultat2": dates[i]+mots[y]
         }
-
-# Convert the data to JSON
-json_data = json.dumps(data)
-
-# Write the JSON data to a file
-with open('output.json', 'w') as file:
-    file.write(json_data)
 
