@@ -2,7 +2,9 @@ from Options.WordManipulator import WordManipulator
 
 
 class CapitalizeCaseWord(WordManipulator):
-    def manipulate_words(self, words):
-        capitalized_words = [word.capitalize() for word in words]
-        return capitalized_words
+    def __init__(self, words):
+        super().__init__(words)
+    #Polymorphisme    
+    def run(self):
+        return [word.capitalize() for word in self.words]
     
