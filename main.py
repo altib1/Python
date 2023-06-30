@@ -1,73 +1,47 @@
-import datetime
-import Person 
-import unicodedata
-import json
+from flask import Flask, jsonify, render_template, request
+from datetime import datetime
+from engine import Engine
 
+app = Flask(__name__)
 
+@app.route('/')
+def index(data={}):
+    return render_template('index.html', data=data)
 
-variable = str('test')
-variable1 = str(datetime.date.today)
-mot = ''
-date = ''
-mots = []
-dates = []
+@app.route('/submit', methods=['POST'])
+def submit():
+    data = request.get_json()
+    words = data['words']
+    dates = data['dates']
 
-person = Person.Person(variable, datetime.date.today)
+    result = process_input(words, dates)
+    return jsonify(result)
 
-# Traitement pour mots
-def strip_accents(s):
-    return ''.join(c for c in unicodedata.normalize('NFD', s)
-        if unicodedata.category(c) != 'Mn')  
+def process_input(words, dates):
+    results = []
 
+    options = {
+        "leet_min": True,
+        "leet_maj": True,
+        "special_char": True,
+        "uppercase": True,
+        "lowercase": True,
+        "Capitalize": True,
+        "special_char_level": "common",
+        "special_char_max": 5,
+    }
 
-for i in range(len(person.mots)):
-    mot = person.mots[i]
-    
-# for i in range(len(person.dates)):
-#    date = person.dates[i]
+    engine = Engine(words, options)
 
-mots.append(person.mots)
+    # Combine variations with dates
+    for date in dates:
+        for word_list in engine.array_possibilities:
+            for word in word_list:
+                results.append(word + date)
+                results.append(date + word)
 
-for i in range(len(mots)):
-    mots.append(strip_accents(mots[i]))
-    mots.append(strip_accents(mots[i]).capitalize())
-    mots.append(strip_accents(mots[i]).upper())
-    mots.append(strip_accents(mots[i]).lower())
+    return {'Results': results}
 
-mots.append(person.mots.upper())
-mots.append(person.mots.capitalize())
-mots.append(person.mots.lower())
-
-leet = {'a':'4','e':'3','i':'1','o':'0','A':'4','E':'3','I':'1','O':'0'}
-for i in range(len(mots)):
-    for lettre in mots[i] :
-        for key in leet:
-            if lettre == key:
-                count = mots[i].count(lettre)
-                for j in range(count):
-                    mots.append(mots[i].replace(lettre, leet[key], j)) 
-                mots.append(mots[i].replace(lettre, leet[key])) 
-                mots[i] = mots[i].replace(lettre, leet[key])    
-        mots.append(mots[i])                         
-
-mots = list(dict.fromkeys(mots)); 
-
-#for i in range(len(mots)):
-#    print(str(mots[i]))
-
-# traitements pour dates 
-#print(str(person.dates()))
-
-dates.append(str(person.day()))
-dates.append(str(person.month()))
-dates.append(str(person.year()))
-dates.append(str(person.day()) + str(person.month()) + str(person.year()))
-dates.append(str(person.year()) + str(person.month()) + str(person.day()))
-data = {};
-for i in range(len(dates)):
-    for y in range(len(mots)):
-        data = {
-            "resultat1": mots[y]+dates[i] ,
-            "resultat2": dates[i]+mots[y]
-        }
+if __name__ == '__main__':
+    app.run(debug=True)
 
