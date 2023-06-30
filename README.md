@@ -27,7 +27,7 @@ La composition est un mécanisme de la programmation orientée objet qui permet 
 
 Dans la classe Engine, j'ai une relation de composition avec les classes GetLeetMin, GetLeetMaj, LowerCaseWord, etc. J'ai crée une instance de chaque classe manipulatrice à l'intérieur de la classe Engine et utilisez ces instances pour effectuer les manipulations nécessaires.
 
-[Lien vers le code :](https://github.com/altib1/Python/blob/main/engine.py6)
+[Lien vers le code :](https://github.com/altib1/Python/blob/main/engine.py)
 
 ## Héritage
 
@@ -54,7 +54,7 @@ L'interface:
 
 Les attributs d'objets sont des variables définies à l'intérieur d'une classe qui représentent les caractéristiques ou les données de l'objet. Chaque instance de la classe possède ses propres valeurs d'attributs, ce qui leur donne une identité unique. Les attributs permettent de stocker et de manipuler des informations associées à l'objet.
 
-[Lien vers méthode d'objet :](https://github.com/altib1/Python/blob/main/engine.py0) 
+[Lien vers méthode d'objet :](https://github.com/altib1/Python/blob/main/engine.py) 
 
 ## Méthodes et attributs statiques
 
